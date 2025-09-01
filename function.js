@@ -83,53 +83,57 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 			`Quality: ${quality}`
 	);
 
-	const customCSS = `
-	body {
-	  margin: 0!important
-	}
-  
-	button#download {
-	  position: fixed;
-	  border-radius: 0.5rem;
-	  font-size: 14px;
-	  font-weight: 600;
-	  line-height: 1.5rem;
-	  color: #0d0d0d;
-	  border: none;
-	  font-family: 'Inter';
-	  padding: 0px 12px;
-	  height: 32px;
-	  background: #ffffff;
-	  top: 8px;
-	  right: 8px;
-	  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 1px 2.5px rgba(0, 0, 0, 0.1);
-	  cursor: pointer;
-	}
-  
-	button#download:hover {
-	  background: #f5f5f5;
-	  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.06), 0 6px 12px -3px rgba(0, 0, 0, 0.1);
-	}
-  
-	button#download.downloading {
-	  color: #ea580c;
-	}
-  
-	button#download.done {
-	  color: #16a34a;
-	}
-  
-	::-webkit-scrollbar {
-	  width: 5px;
-	  background-color: rgb(0 0 0 / 8%);
-	}
-  
-	::-webkit-scrollbar-thumb {
-	  background-color: rgb(0 0 0 / 32%);
-	  border-radius: 4px;
-	}
-	`;
+const customCSS = `
+body {
+  margin: 0!important;
+  font-family: 'Inter', sans-serif;
+}
 
+button#download {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  transition: all 0.25s ease-in-out;
+}
+
+button#download:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+}
+
+/* While downloading */
+button#download.downloading {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+/* When done */
+button#download.done {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: rgb(0 0 0 / 8%);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(0 0 0 / 32%);
+  border-radius: 4px;
+}
+`;
+	
 	// HTML THAT IS RETURNED AS A RENDERABLE URL
 	const originalHTML = `
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
