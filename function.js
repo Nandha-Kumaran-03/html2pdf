@@ -3,7 +3,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 	const fidelityMap = {
 		low: 1,
 		standard: 1.5,
-		high: 2,
+		high: 3,
 	};
 
 	// DYNAMIC VALUES
