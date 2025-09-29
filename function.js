@@ -89,20 +89,20 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+
 button#download {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 999px;
-  font-size: 15px;
-  font-weight: 600;
-  color: #fff;
-  background: linear-gradient(135deg, #6366f1, #3b82f6);
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-  transition: all 0.25s ease-in-out;
+background-color: #a88a6b;
+color: #ffffff;
+border: none;
+border-radius: 8px;
+padding: 12px 24px;
+font-size: 15px;
+font-weight: 600;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+gap: 12px;
+transition: background-color 0.3s ease;
 }
 
 button#download:hover {
