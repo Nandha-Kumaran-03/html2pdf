@@ -1,3 +1,6 @@
+
+Copy
+
 window.function = function (html, fileName, format, zoom, orientation, margin, breakBefore, breakAfter, breakAvoid, fidelity, customDimensions) {
 	// FIDELITY MAPPING
 	const fidelityMap = {
@@ -5,7 +8,6 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 		standard: 1.5,
 		high: 3,
 	};
-
 	// DYNAMIC VALUES
 	html = html.value ?? "No HTML set.";
 	fileName = fileName.value ?? "file";
@@ -18,7 +20,6 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 	breakAvoid = breakAvoid.value ? breakAvoid.value.split(",") : [];
 	quality = fidelityMap[fidelity.value] ?? 1.5;
 	customDimensions = customDimensions.value ? customDimensions.value.split(",").map(Number) : null;
-
 	// DOCUMENT DIMENSIONS
 	const formatDimensions = {
 		a0: [4967, 7022],
@@ -63,11 +64,9 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 		tabloid: [1648, 2551],
 		credit_card: [319, 508],
 	};
-
-	// GET FINAL DIMESIONS FROM SELECTED FORMAT
+	// GET FINAL DIMENSIONS FROM SELECTED FORMAT
 	const dimensions = customDimensions || formatDimensions[format];
 	const finalDimensions = dimensions.map((dimension) => Math.round(dimension / zoom));
-
 	// LOG SETTINGS TO CONSOLE
 	console.log(
 		`Filename: ${fileName}\n` +
@@ -82,101 +81,53 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 			`Break avoid: ${breakAvoid}\n` +
 			`Quality: ${quality}`
 	);
-
-const customCSS = `
+ 
+	const customCSS = `
 body {
   margin: 0!important;
   font-family: 'Inter', sans-serif;
 }
-
-
-button#download {
-background-color: #a88a6b;
-color: #ffffff;
-border: none;
-border-radius: 8px;
-padding: 12px 24px;
-font-size: 15px;
-font-weight: 600;
-cursor: pointer;
-display: inline-flex;
-align-items: center;
-gap: 12px;
-transition: background-color 0.3s ease;
-}
-
-button#download:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
-}
-
-/* While downloading */
-button#download.downloading {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-}
-
-/* When done */
-button#download.done {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
-}
-
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 5px;
   background-color: rgb(0 0 0 / 8%);
 }
-
 ::-webkit-scrollbar-thumb {
   background-color: rgb(0 0 0 / 32%);
   border-radius: 4px;
 }
 `;
-	
+ 
 	// HTML THAT IS RETURNED AS A RENDERABLE URL
 	const originalHTML = `
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"><\/script>
 	  <style>${customCSS}</style>
-	  <div class="main">
-	  <div class="header">
-		<button class="button" id="download">Download</button>
-	  </div>
 	  <div id="content">${html}</div>
-	  </div>
 	  <script>
-	  document.getElementById('download').addEventListener('click', function() {
+	  window.addEventListener('load', function() {
 		var element = document.getElementById('content');
-		var button = this;
-		button.innerText = 'Downloading...';
-		button.className = 'downloading';
-  
+ 
 		var opt = {
-		pagebreak: { mode: ['css'], before: ${JSON.stringify(breakBefore)}, after: ${JSON.stringify(breakAfter)}, avoid: ${JSON.stringify(breakAvoid)} },
-		margin: ${margin},
-		filename: ${JSON.stringify(fileName)},
-		html2canvas: {
-		  useCORS: true,
-		  scale: ${quality}
-		},
-		jsPDF: {
-		  unit: 'px',
-		  orientation: '${orientation}',
-		  format: [${finalDimensions}],
-		  hotfixes: ['px_scaling']
-		}
+		  pagebreak: { mode: ['css'], before: ${JSON.stringify(breakBefore)}, after: ${JSON.stringify(breakAfter)}, avoid: ${JSON.stringify(breakAvoid)} },
+		  margin: ${margin},
+		  filename: ${JSON.stringify(fileName)},
+		  html2canvas: {
+		    useCORS: true,
+		    scale: ${quality}
+		  },
+		  jsPDF: {
+		    unit: 'px',
+		    orientation: '${orientation}',
+		    format: [${finalDimensions}],
+		    hotfixes: ['px_scaling']
+		  }
 		};
-		html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
-		button.innerText = 'Done 🎉';
-		button.className = 'done';
-		setTimeout(function() { 
-		  button.innerText = 'Download';
-		  button.className = ''; 
-		}, 2000);
-		}).save();
+ 
+		html2pdf().set(opt).from(element).save();
 	  });
-	  </script>
+	  <\/script>
 	  `;
+ 
 	var encodedHtml = encodeURIComponent(originalHTML);
 	return "data:text/html;charset=utf-8," + encodedHtml;
 };
