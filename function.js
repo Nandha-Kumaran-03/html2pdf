@@ -4,7 +4,7 @@ window.function = function (html, fileName, format, zoom, orientation, margin, b
 	const fidelityMap = {
 		low: 1,
 		standard: 1.5,
-		high: 3,
+		high: 6,
 	};
 	// DYNAMIC VALUES
 	html = html.value ?? "No HTML set.";
